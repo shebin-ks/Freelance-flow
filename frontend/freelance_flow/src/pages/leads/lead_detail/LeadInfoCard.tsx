@@ -23,7 +23,7 @@ const LeadInfoCard: React.FC<LeadInfoCardProps> = ({ lead, onDelete }) => {
 
     const statusClass = statusColorMap[lead.status?.toLowerCase()] || 'bg-gray-100 text-gray-800';
 
-    const { deleteLeadStatus } = useAppSelector(state => state.leads);
+    const { deleteLeadStatus,deleteLeadId } = useAppSelector(state => state.leads);
 
 
 
@@ -35,7 +35,7 @@ const LeadInfoCard: React.FC<LeadInfoCardProps> = ({ lead, onDelete }) => {
                     <p className="text-sm text-gray-500">{lead.leadCompanyName || 'No company'}</p>
                 </div>
                 <div className="flex gap-5 items-center">
-                    {deleteLeadStatus === 'loading' ? (
+                    {deleteLeadStatus === 'loading'&& deleteLeadId === lead.id ? (
                         <LoadingIcon color="red" />
                     ) : (
                         <Trash2

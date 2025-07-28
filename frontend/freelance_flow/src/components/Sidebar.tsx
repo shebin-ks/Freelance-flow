@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../hooks/reduxHooks';
+import LogoutButtton from './widgets/LogoutButtton';
 
 const allNavigations = [
     { name: 'Dashboard', id: '', icon: Home },
@@ -64,7 +65,17 @@ const Sidebar: React.FC<SidebarProps> = ({ onMenuClick }) => {
                         )}
                     </NavLink>
                 ))}
+                <NavLink
+                    to="#"
+                    onClick={(e) => e.preventDefault()}
+                    className="flex md:hidden items-center gap-3 p-2 px-4 rounded cursor-pointer text-gray-700 hover:bg-gray-200"
+                >
+                    <LogoutButtton />
+                </NavLink>
             </nav>
+
+
+
         </aside>
     );
 };

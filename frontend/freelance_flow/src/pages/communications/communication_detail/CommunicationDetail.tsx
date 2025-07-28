@@ -59,7 +59,7 @@ const CommunicationDetail: React.FC = () => {
             <div className="border   border-gray-100 shadow-md bg-white rounded-md overflow-hidden">
 
 
-                <div className="flex gap-12 border-b border-gray-200 px-4 py-3">
+                <div className="flex gap-12 border-b border-gray-200 px-4 py-3 overflow-auto">
                     {tabs.map((tab, index) => {
                         const isActive = tab.label === activeTab;
                         return (

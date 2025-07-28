@@ -22,7 +22,9 @@ const FollowupInfoCard: React.FC<FollowupInfoCardProps> = ({ reminder }) => {
 
 
     const dispatch = useAppDispatch()
-    const { reminderUpdateStatus } = useAppSelector(state => state.reminders)
+    const { reminderUpdateStatus, reminderId } = useAppSelector(state => state.reminders)
+
+    const {user} = useAppSelector(state=>state.auth)
     const handleMarkDone = () => {
         Swal.fire({
             title: 'Mark as done?',
@@ -64,8 +66,8 @@ const FollowupInfoCard: React.FC<FollowupInfoCardProps> = ({ reminder }) => {
             </div>
 
             <div className="flex gap-5 items-center">
-                {!reminder.isCompleted && (
-                    reminderUpdateStatus === 'loading' ? (
+                {!reminder.isCompleted && user && user.role !== 'viewer' && (
+                    reminderUpdateStatus === 'loading' && reminderId === reminder.id ? (
                         <LoadingIcon />
                     ) : (
                         <input

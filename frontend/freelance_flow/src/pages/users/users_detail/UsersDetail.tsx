@@ -89,7 +89,7 @@ const UsersDetail: React.FC = () => {
           {message}
         </div>
       )}
-      <div className="flex gap-12 border-b border-gray-200 px-4 py-3">
+      <div className="flex gap-12 border-b border-gray-200 px-4 py-3 overflow-auto">
         {tabs.map((tab, index) => {
           const isActive = tab.label === activeTab;
           return (

@@ -1,15 +1,14 @@
-import { LogOut, Menu } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
-import { logout } from '../redux/features/auth/authSlice';
-import { clearRedux } from '../redux/features/clearReducer';
+import { useLocation } from 'react-router-dom';
+import { useAppSelector } from '../hooks/reduxHooks';
+import LogoutButtton from './widgets/LogoutButtton';
 
 
 const routeTitles: Record<string, string> = {
     '/': 'Dashboard',
     '/leads': 'Leads',
-    '/followups': 'Follow-ups',
+    '/followups': 'Follow-ups', 
     '/pipeline': 'Pipeline',
     '/communications': 'Communications',
     '/revenue': 'Revenue',
@@ -27,12 +26,9 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
     const location = useLocation();
     const pageTitle = routeTitles[location.pathname] || 'Page';
-    const navigate = useNavigate();
 
     const { user } = useAppSelector(state => state.auth)
 
-
-    const dispatch = useAppDispatch()
     return (
         <header className="bg-white px-6 py-4 my-4 shadow-md flex justify-between items-center">
 
@@ -44,18 +40,9 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
             </div>
 
             <div className="flex items-center gap-6">
-                <button onClick={
-                    async () => {
-                        dispatch(clearRedux());
-
-                        dispatch(logout())
-                        navigate('/auth')
-                    }
-                }
-                    className="flex items-center gap-2 cursor-pointer text-gray-600 hover:text-red-600 transition-colors">
-                    <LogOut className="w-5 h-5" />
-                    <span className=''>Logout</span>
-                </button>
+               <div className='hidden md:block'>
+                   <LogoutButtton />
+               </div>
 
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 flex justify-center items-center rounded-full bg-blue-600 text-white font-medium">

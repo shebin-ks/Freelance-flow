@@ -8,6 +8,8 @@ export const loginUser = async (payload: LoginPayload) => {
     const response = await axiosInstance.post<LoginResponse>(API_ROUTES.AUTH.LOGIN, payload);
     return response.data;
   } catch (error: any) {
+    console.log(error);
+    
     const message = error.response?.data?.message || "Failed to Login";
     throw new Error(message);
   }

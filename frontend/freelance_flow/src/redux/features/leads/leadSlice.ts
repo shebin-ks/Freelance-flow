@@ -30,6 +30,8 @@ const initialState: LeadsState = {
     deleteLeadStatus: "idle",
     deleteLeadError: null,
 
+    deleteLeadId:null,
+
     topLeads: [],
     topLeadsStatus: "idle",
     topLeadserror: null,
@@ -99,9 +101,10 @@ const leadsSlice = createSlice({
             })
 
             // --------- Delete Lead -----------
-            .addCase(removeLead.pending, (state) => {
+            .addCase(removeLead.pending, (state,action) => {
                 state.deleteLeadStatus = "loading";
                 state.deleteLeadError = null;
+                state.deleteLeadId = action.meta.arg
             })
             .addCase(removeLead.fulfilled, (state, action: PayloadAction<DeleteLeadResponse>) => {
                 const leadId = action.payload.leadId;

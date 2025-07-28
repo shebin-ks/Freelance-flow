@@ -9,7 +9,7 @@ import { paymentSchema } from '../validations/payment.validation'
 const router = express.Router()
 
 router.route("/")
-    .get(authorizeRole([UserRole.ADMIN]),getCompanyPayments)
+    .get(authorizeRole([UserRole.ADMIN,UserRole.VIEWER]),getCompanyPayments)
 
 router.route("/create")
     .post(authorizeRole([UserRole.ADMIN]), validateBody(paymentSchema), addPayment)

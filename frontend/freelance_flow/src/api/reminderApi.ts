@@ -33,6 +33,7 @@ export const fetchReminders = async () => {
 
 export const markReminderAsDone = async (reminderId: number) => {
   try {
+
     const response = await axiosInstance.patch<CreateReminderResponse>(API_ROUTES.REMINDERS.MARK_COMPLETE(reminderId));
     return response.data;
   } catch (error: any) {

@@ -26,6 +26,8 @@ const initialState: ReminderState = {
     reminderUpdateStatus: 'idle',
     reminderUpdateError: null,
 
+    reminderId:null,
+
 
 }
 
@@ -137,9 +139,11 @@ const reminderSlice = createSlice({
 
 
             //------- Mark reminder as done ------
-            .addCase(markReminderDone.pending, (state) => {
+            .addCase(markReminderDone.pending, (state,action) => {
                 state.reminderUpdateStatus = 'loading';
                 state.reminderUpdateError = null;
+
+                state.reminderId = action.meta.arg
             })
             .addCase(markReminderDone.fulfilled, (state, action: PayloadAction<CreateReminderResponse>) => {
                 state.reminderUpdateStatus = 'succeeded';

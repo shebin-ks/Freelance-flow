@@ -22,6 +22,9 @@ export interface ReminderState {
 
     reminderUpdateStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
     reminderUpdateError: string | null;
+
+    reminderId:number | null;
+
 }
 
 

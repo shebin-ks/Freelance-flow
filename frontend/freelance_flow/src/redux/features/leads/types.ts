@@ -11,6 +11,7 @@ export interface LeadsState {
 
     deleteLeadStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
     deleteLeadError: string | null;
+    deleteLeadId: number | null;
 
     updateStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
     updateError: string | null;
@@ -59,7 +60,7 @@ export interface LeadResponse {
 }
 
 export interface TopLead extends Lead {
-   
+
     totalPaid?: number;
 }
 

@@ -15,6 +15,7 @@ export const createLead = async (payload: Leadpayload) => {
 
 export const deleteLead = async (leadId: number) => {
   try {
+
     const { data } = await axiosInstance.delete<DeleteLeadResponse>(`${API_ROUTES.LEADS.DELETE}/${leadId}`);
     console.log(data);
     return data;
@@ -56,7 +57,7 @@ export const importLeads = async (file: File) => {
       });
 
     return response.data;
-  } catch (error:any) {
+  } catch (error: any) {
     throw new Error(error.response?.data?.message || "Failed to upload excel file");
 
   }
