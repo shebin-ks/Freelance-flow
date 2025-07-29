@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { createReminder, fetchReminders, markReminderAsDone, upcommingReminders } from "../services/reminder.service";
-import { boolean } from "joi";
+
 
 export const createReminderController = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -74,7 +74,6 @@ export const getUpcommingReminder = async (req: Request, res: Response, next: Ne
         const days = parseInt(req.query.days as string) || 7
 
         const userId = (req as any).user.id
-        console.log(userId);
 
 
         const result = await upcommingReminders(userId, days)

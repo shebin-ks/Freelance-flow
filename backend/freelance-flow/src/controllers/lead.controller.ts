@@ -9,8 +9,6 @@ export const createLeadController = async (req: Request, res: Response, next: Ne
 
         const userId = (req as any).user.id
 
-        console.log(userId);
-
 
         const result = await createLead(userId, name, purpose, email, phone, leadCompanyName)
 

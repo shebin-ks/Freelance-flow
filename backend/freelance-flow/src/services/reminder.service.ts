@@ -5,6 +5,7 @@ import { Reminder } from "../entities/reminder.entity";
 import { User } from "../entities/user.entity";
 import { ReminderType } from "../enums/reminder_type.enum";
 import { ApiError } from "../middlewares/error.handler.middleware";
+import { emitCompanyNotification, NotificationPayload } from "./notification.services";
 
 
 export const createReminder = async (
@@ -46,6 +47,20 @@ export const createReminder = async (
 
     await reminderRepo.save(reminder)
 
+    const notification: NotificationPayload = {
+        type: 'REMINDER_CREATED',
+        message: `New reminder set for lead "${lead.name}" by ${user.name}`,
+        data: {
+            leadId: lead.id,
+            reminderAt,
+            note,
+            createdBy: user.name,
+        },
+        createdAt: new Date().toISOString(),
+    };
+
+    emitCompanyNotification(user.company.id, notification);
+
     return {
         success: true,
         message: "Reminder created successfully",
@@ -77,6 +92,20 @@ export const markReminderAsDone = async (userId: number, reminderId: number) => 
     reminder.isCompleted = true
     await reminderRepo.save(reminder)
 
+    const notification: NotificationPayload = {
+        type: 'REMINDER_COMPLETED',
+        message: `Reminder for lead "${reminder.lead.name}" marked as done by ${user.name}`,
+        data: {
+            reminderId: reminder.id,
+            leadId: reminder.lead.id,
+            completedBy: user.name,
+        },
+        createdAt: new Date().toISOString(),
+    };
+
+    emitCompanyNotification(user.company.id, notification);
+
+
     return {
         success: true,
         message: "Reminder marked as completed",
@@ -101,7 +130,7 @@ export const fetchReminders = async (
         relations: ['company']
     })
 
-console.log(isCompleted);
+    console.log(isCompleted);
 
 
     const reminders = await reminderRepo.find({

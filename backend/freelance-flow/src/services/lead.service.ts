@@ -9,6 +9,7 @@ import { Company } from "../entities/company.entity"
 import { Payment } from "../entities/payment.entity"
 import { Reminder } from "../entities/reminder.entity"
 import { CommunicationLog } from "../entities/communication.entity"
+import { emitCompanyNotification, NotificationPayload } from "./notification.services"
 
 
 export const createLead = async (
@@ -42,6 +43,18 @@ export const createLead = async (
     })
 
     await leadRepo.save(lead)
+
+    const notification: NotificationPayload = {
+        type: 'LEAD_CREATED',
+        message: `New lead "${lead.name}" created by ${user.name}`,
+        data: {
+            leadId: lead.id,
+            createdBy: user.name,
+        },
+        createdAt: new Date().toISOString(),
+    };
+
+    emitCompanyNotification(user.company.id, notification);
 
 
     return {
@@ -84,6 +97,21 @@ export const statusChange = async (
     lead.status = status
 
     await leadRepo.save(lead)
+
+    await leadRepo.save(lead);
+
+    const notification: NotificationPayload = {
+        type: 'LEAD_STATUS_CHANGED',
+        message: `Status of lead "${lead.name}" changed to ${status} by ${user.name}`,
+        data: {
+            leadId: lead.id,
+            newStatus: status,
+            updatedBy: user.name,
+        },
+        createdAt: new Date().toISOString(),
+    };
+
+    emitCompanyNotification(user.company.id, notification);
 
     return {
         success: true,
@@ -252,6 +280,21 @@ export const removeLead = async (userId: number, leadId: number) => {
 
     await leadRepo.remove(lead);
 
+
+    const notification: NotificationPayload = {
+        type: 'LEAD_DELETED',
+        message: `Lead "${lead.name}" was deleted by ${user.name}`,
+        data: {
+            leadId: lead.id,
+            deletedBy: user.name,
+        },
+        createdAt: new Date().toISOString(),
+    };
+
+    console.log("company id : ", user.company.id);
+
+    emitCompanyNotification(user.company.id, notification);
+
     return {
         success: true,
         message: "Lead deleted successfully",
@@ -295,7 +338,7 @@ export const insertLeads = async (userId: number, leadsData: LeadData[]) => {
 
     const savedLeads = await leadRepo.save(leadsToInsert);
 
-    
+
     return {
         success: true,
         message: `${savedLeads.length} leads imported successfully`,

@@ -46,8 +46,6 @@ export const getClientCommunication = async (req: Request, res: Response, next: 
 
         const user = (req as any).user
 
-        console.log(leadId);
-
 
         const result = await fetchLeadCommunications(user.id, leadId)
 

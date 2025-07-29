@@ -18,7 +18,6 @@ export const createUser = async (name: string, email: string, password: string, 
 
     const existingUser = await userRepo.findOneBy({ email })
 
-    console.log(existingUser);
 
 
     if (existingUser) {
@@ -59,7 +58,15 @@ export const authenticateUser = async (email: string, password: string) => {
 
     const userRepo = AppDataSource.getRepository(User)
 
-    const user = await userRepo.findOneBy({ email })
+    // const user = await userRepo.findOneBy({ email })
+
+    const user = await userRepo.findOne({
+        where: { email },
+        relations: ['company']
+    })
+
+    console.log(user);
+
 
     if (!user) {
         throw new ApiError("Email doesn't exist", 404)
@@ -133,7 +140,6 @@ export const requestPasswordReset = async (email: string) => {
 
     const user = await userRepo.findOneBy({ email })
 
-    console.log(user);
     if (!user) {
 
         throw new ApiError('No user associated with this email', 404);
@@ -182,7 +188,7 @@ export const changePassword = async (token: string, password: string) => {
     if (typeof decoded === "string" || !decoded.id) {
         throw new ApiError("Invalid or expired invite token", 400);
     }
-    
+
 
     const userRepo = AppDataSource.getRepository(User);
 

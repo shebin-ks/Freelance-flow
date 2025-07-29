@@ -11,11 +11,17 @@ export interface User {
   phone: string;
   role: string;
   status: string;
+  company: Company;
+}
+
+export interface Company {
+  id: number;
+  name: string
 }
 
 export interface BaseResponse {
-    success: boolean;
-    message: string;
+  success: boolean;
+  message: string;
 }
 
 
