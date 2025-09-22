@@ -9,7 +9,7 @@ const AdminOrViewerRoute: React.FC = () => {
     return <Navigate to="/auth" replace />;
   }
 
-  if (user?.role !== 'admin' && user?.role !== 'viewer') {    
+  if (user?.role !== 'admin' && user?.role !== 'viewer') {
     return <Navigate to="/" replace />;
   }
 

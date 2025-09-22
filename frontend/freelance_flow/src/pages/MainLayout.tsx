@@ -1,16 +1,13 @@
-import React, { useState } from 'react'
+import React, {  useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
 import { ToastContainer } from 'react-toastify'
-import { useCompanySocket } from '../socket/socket'
 
 const MainLayout: React.FC = () => {
 
-
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
-    useCompanySocket()
     return (
         <div className='h-screen flex bg-gray-50 overflow-hidden'>
             <ToastContainer position="top-center" autoClose={3000} />

@@ -1,5 +1,5 @@
 import type { BaseResponse } from "../redux/features/commonTypes/commonTypes";
-import type { AddUserResponse, DeleteUserResponse, InvitationAcceptPayload, InvitationPayload, InvitationSendRespone, UsersResponse, UserStatusPayload } from "../redux/features/users/types";
+import type { AddUserResponse, DeleteUserResponse, InvitationAcceptPayload, InvitationPayload, InvitationSendRespone, UsersResponse, UserStatusPayload } from "../redux/features/users/types.ts";
 import { API_ROUTES } from "./apiRoutes";
 import axiosInstance from "./axiosInstance";
 

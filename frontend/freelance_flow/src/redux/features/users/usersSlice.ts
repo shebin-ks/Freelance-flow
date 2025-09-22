@@ -5,7 +5,7 @@ import type {
     InvitationSendRespone,
     UsersResponse,
     UsersState,
-} from "./types";
+} from "./types.ts";
 import {
     acceptInvite,
     addUser,
@@ -45,7 +45,16 @@ const initialState: UsersState = {
 const usersSlice = createSlice({
     name: "users",
     initialState,
-    reducers: {},
+    reducers: {
+        updateUserDetails: (state, action: PayloadAction<{ userId: number, isOnline: boolean, lastSeen: string }>) => {
+            const { userId, isOnline, lastSeen } = action.payload;
+            const user = state.users.find((u) => u.id === userId);
+            if (user) {
+                user.isOnline = isOnline;
+                user.lastSeen = lastSeen;
+            }
+        }
+    },
     extraReducers: (builder) => {
         builder
 
@@ -233,5 +242,8 @@ const usersSlice = createSlice({
             )
     },
 });
+
+
+export const { updateUserDetails } = usersSlice.actions
 
 export default usersSlice.reducer;

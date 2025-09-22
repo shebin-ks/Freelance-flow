@@ -21,6 +21,9 @@ export const API_ROUTES = {
         UPDATE_STATUS: `/user/change-status`,
         MY_PROFILE: `/user/profile/me`,
     },
+    MESSAGES: {
+        GET_ALL: '/messages'
+    },
     PIPELINE: {
         OVERVIEW: `/pipeline/overview`,
     },
@@ -31,7 +34,7 @@ export const API_ROUTES = {
         DELETE: `/lead/profile`,
         UPDATE_STATUS: `/lead/change-status`,
         TOP_LEADS: `/lead/top-leads`,
-        UPLOAD_LEADS:'/lead/import'
+        UPLOAD_LEADS: '/lead/import'
     },
 
     REMINDERS: {

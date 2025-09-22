@@ -3,12 +3,10 @@ import { useAppSelector } from '../../hooks/reduxHooks'
 import { Navigate, Outlet } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+
+
 const ProtectedRoute: React.FC = () => {
-    const { accessToken, user } = useAppSelector(state => state.auth)
-    
-    if (!accessToken) {
-        return <Navigate to='/auth' replace />
-    }
+    const { accessToken, user } = useAppSelector(state => state.auth);
 
     useEffect(() => {
         if (user && user.status !== 'active') {
@@ -16,13 +14,16 @@ const ProtectedRoute: React.FC = () => {
         }
     }, [user]);
 
-
+    if (!accessToken) {
+        return <Navigate to='/auth' replace />;
+    }
 
     if (user?.status !== 'active') {
         return <Navigate to="/auth" replace />;
     }
 
-    return <Outlet />
+    return <Outlet />;
 }
+
 
 export default ProtectedRoute

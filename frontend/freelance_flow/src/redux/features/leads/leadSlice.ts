@@ -16,6 +16,7 @@ import {
     uploadLeadsExcel,
 } from "./leadThunk";
 import { clearRedux } from "../clearReducer";
+import type { Lead } from "../commonTypes/commonTypes";
 
 
 
@@ -30,7 +31,7 @@ const initialState: LeadsState = {
     deleteLeadStatus: "idle",
     deleteLeadError: null,
 
-    deleteLeadId:null,
+    deleteLeadId: null,
 
     topLeads: [],
     topLeadsStatus: "idle",
@@ -60,6 +61,50 @@ const leadsSlice = createSlice({
         resetUpdateLeadStatus(state) {
             state.updateStatus = "idle";
             state.updateError = null;
+        },
+        removeLeadLocally(state, action: PayloadAction<number>) {
+            const removedLead = state.allLeads.find(lead => lead.id === action.payload);
+            if (removedLead) {
+                switch (removedLead.status) {
+                    case "inquiry":
+                        state.totalInquiry--;
+                        break;
+                    case "proposal_sent":
+                        state.totalProposalSent--;
+                        break;
+                    case "contract_signed":
+                        state.totalContractSigned--;
+                        break;
+                    case "payment_done":
+                        state.totalPaymentDone--;
+                        break;
+                }
+            }
+            state.allLeads = state.allLeads.filter(lead => lead.id !== action.payload);
+        },
+        addLeadLocally(state, action: PayloadAction<{ lead: Lead; currentUserId: number }>) {
+            const { lead, currentUserId } = action.payload;
+
+            if (lead.createdBy.id === currentUserId) return;
+
+            const alreadyExists = state.allLeads.some((l) => l.id === lead.id);
+            if (alreadyExists) return;
+
+            state.allLeads.unshift(lead);
+            switch (lead.status) {
+                case "inquiry":
+                    state.totalInquiry++;
+                    break;
+                case "proposal_sent":
+                    state.totalProposalSent++;
+                    break;
+                case "contract_signed":
+                    state.totalContractSigned++;
+                    break;
+                case "payment_done":
+                    state.totalPaymentDone++;
+                    break;
+            }
         },
     },
     extraReducers: (builder) => {
@@ -101,7 +146,7 @@ const leadsSlice = createSlice({
             })
 
             // --------- Delete Lead -----------
-            .addCase(removeLead.pending, (state,action) => {
+            .addCase(removeLead.pending, (state, action) => {
                 state.deleteLeadStatus = "loading";
                 state.deleteLeadError = null;
                 state.deleteLeadId = action.meta.arg
@@ -258,6 +303,8 @@ export const {
     resetAddLeadStatus,
     resetDeleteLeadStatus,
     resetUpdateLeadStatus,
+    removeLeadLocally,
+    addLeadLocally,
 } = leadsSlice.actions;
 
 export default leadsSlice.reducer;

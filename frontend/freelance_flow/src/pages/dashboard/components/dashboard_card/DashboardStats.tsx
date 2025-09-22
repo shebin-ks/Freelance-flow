@@ -24,11 +24,11 @@ const DashboardStats: React.FC = () => {
 
     const stats: Stat[] = [
         {
-            title: 'Total Employees',
-            value: summary ? summary.totalContacts : '--',
+            title: 'Total Leads',
+            value: summary ? summary.totalLeads : '--',
             icon: Users,
-            change: summary ? `${summary.totalContactsGrowth}%` : '--',
-            changeType: getChangeType(summary?.totalContactsGrowth ?? 0),
+            change: summary ? `${summary.totalLeadsGrowth}%` : '--',
+            changeType: getChangeType(summary?.totalLeadsGrowth ?? 0),
             color: 'blue',
         },
         {

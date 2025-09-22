@@ -22,11 +22,12 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         logout(state) {
-           
             state.user = null;
             state.accessToken = null;
             localStorage.removeItem('accessToken');
             localStorage.removeItem('user');
+
+
         },
         setAccessToken(state, action: PayloadAction<string>) {
             state.accessToken = action.payload;

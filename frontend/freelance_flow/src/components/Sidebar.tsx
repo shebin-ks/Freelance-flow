@@ -6,7 +6,8 @@ import {
     DollarSign,
     Home,
     Target,
-    X
+    X,
+    LucideMessageCircleMore
 } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../hooks/reduxHooks';
@@ -20,6 +21,7 @@ const allNavigations = [
     { name: 'Communications', id: 'communications', icon: MessageSquare },
     { name: 'Revenue', id: 'revenue', icon: DollarSign, roles: ['admin', 'viewer'] },
     { name: 'Users', id: 'users', icon: Users, roles: ['admin', 'viewer'] },
+    { name: 'Messages', id: 'messages', icon: LucideMessageCircleMore},
 ];
 
 interface SidebarProps {

@@ -12,6 +12,8 @@ export interface User {
   role: string;
   status: string;
   company: Company;
+  isOnline: boolean;
+  lastSeen: string;
 }
 
 export interface Company {

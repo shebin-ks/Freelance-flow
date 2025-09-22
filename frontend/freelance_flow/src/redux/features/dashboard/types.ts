@@ -17,8 +17,8 @@ export interface DashboardState {
 // ------ API TYPES ---------------
 
 export interface DashboardSummary {
-    totalContacts: number;
-    totalContactsGrowth: number;
+    totalLeads: number;
+    totalLeadsGrowth: number;
     totalRevenue: number;
     totalRevenueGrowth: number;
     monthlyRevenue: number;
